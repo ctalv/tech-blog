@@ -36,3 +36,4 @@ Blog.init(
 
 
 // export model
+module.exports = Blog;
