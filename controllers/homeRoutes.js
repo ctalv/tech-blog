@@ -15,9 +15,6 @@ router.get('/', async (req, res) => {
       ],
     });
 
-    // Serialize data so the template can read it
-
-    // Pass serialized data and session flag into template
 
     res.status(200).json(blogData);
   } catch (err) {
@@ -25,9 +22,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-// post route to allow user to comment on particular blogpost
 
-// signed out, nav links go to login page
+
+// signed out, nav links go to login page (handlebars)
 
 
 

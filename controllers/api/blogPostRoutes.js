@@ -22,5 +22,15 @@ router.get('/', withAuth, async (req, res) => {
 
 // delete route for deleting blogpost (taken back to updated dashboard)
 
+// post route to allow user to comment on particular blogpost
+router.post('/:id', async (req, res) => {
+  try {
+    const commentData = Comment.create(req.body);
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(400).json(err)
+  }
+})
+
 
 module.exports = router;
