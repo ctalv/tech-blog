@@ -26,7 +26,11 @@ Comment.belongsTo(User, {
 });
 
 // export models
+<<<<<<< HEAD
 module.exports = { User, Blog, Comment };
 
 
 
+=======
+module.exports = { User, Blog };
+>>>>>>> 6889587cb47a9ced3eb150b6a28366bbc9fcfdab
