@@ -15,6 +15,3 @@ Blog.belongsTo(User, {
 
 // export models
 module.exports = { User, Blog };
-
-
-
