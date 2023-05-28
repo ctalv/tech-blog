@@ -1,10 +1,12 @@
 // import required modules
 const sequelize = require('../config/connection');
-const { User, Blog } = require('../models');
+const { User, Blog, Comment } = require('../models');
 
 // import JSON seed files
 const userData = require('./userData.json');
 const blogData = require('./blogData.json');
+const commentData = require('./commentData.json');
+
 
 // seeds the database
 const seedDatabase = async () => {
@@ -22,6 +24,9 @@ const seedDatabase = async () => {
       user_id: users[Math.floor(Math.random() * users.length)].id,
     });
   }
+
+  await Comment.bulkCreate(commentData);
+  
 
   // terminate the script and exit the Node.js process
   process.exit(0);
