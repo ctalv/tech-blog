@@ -6,7 +6,13 @@ const { Blog, Comment, User } = require('../../models');
 router.get('/:id', async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
-      include: [{model: User},{ model: Comment }],
+      include: [{
+        model: User, 
+        attributes: ['name'],
+      },{
+        model: Comment,
+        attributes: ['text', 'date_created','user_id']
+      }]
     });
     if (!blogData) {
       res.status(404),json({ message: 'No blogpost with that id.'})
@@ -30,18 +36,29 @@ router.post('/', async (req, res) => {
 });
 
 // put route for modifying blogpost (taken back to updated dashboard)
+router.put('/:id', async (req, res) => {
+  const updateBlog = await Blog.update (
+    {
+      tag_name: req.body.blog_title,
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    }
+  );
+  res.json(updateBlog);
+});
 
 // delete route for deleting blogpost (taken back to updated dashboard)
-
-// post route to allow user to comment on particular blogpost
-// router.post('/:id', async (req, res) => {
-//   try {
-//     const commentData = Comment.create(req.body);
-//     res.status(200).json(categoryData);
-//   } catch (err) {
-//     res.status(400).json(err)
-//   }
-// })
+router.delete('/:id', async (req, res) => {
+  const deleteBlog = await Blog.destroy({
+    where: {
+      id: req.params.id
+    }
+  });
+  res.json(deleteBlog)
+});
 
 
 module.exports = router;
