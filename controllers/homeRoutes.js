@@ -5,7 +5,6 @@ const withAuth = require('../utils/auth');
 // get route to see all blogposts
 router.get('/', async (req, res) => {
   try {
-    // Get all projects and JOIN with user data
     const blogData = await Blog.findAll({
       include: [
         {
@@ -25,7 +24,15 @@ router.get('/', async (req, res) => {
 
 
 // signed out, nav links go to login page (handlebars)
+router.get('/login', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    res.redirect('/profile');
+    return;
+  }
 
+  res.render('login');
+});
 
 
 module.exports = router;
