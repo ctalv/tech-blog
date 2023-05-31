@@ -40,7 +40,11 @@ const commentData = require('./commentData.json');
 const seedAll = async () => {
   await sequelize.sync({ force: true });
   console.log('\n----- DATABASE SYNCED -----\n');
-  await User.bulkCreate(userData);
+  
+  await User.bulkCreate(userData, {
+    individualHooks: true, // enables Sequelize to run any defined hooks for each user creation
+    returning: true, // created user objects are returned as a result
+  });
   console.log('\n----- USERS SEEDED -----\n');
 
   await Blog.bulkCreate(blogData);

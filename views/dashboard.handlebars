@@ -1,0 +1,11 @@
+<div class="text-center">
+    <h1>Hello {{user.name}}</h1>
+    {{#each blogs as |blog| }}
+    <div>
+        <a href="blog/{{blog.id}}">{{title}} Created on {{format_date date_created}}</a>
+    </div>
+    {{/each}}
+    <a href="/blog">
+    <button class="btn create">Create New Post</button>
+    </a>
+</div>
