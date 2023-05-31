@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { Blog, Comment, User } = require('../../models');
-// const withAuth = require('../../utils/auth');
+const withAuth = require('../../utils/auth');
 
-// get route for user dashboard
+// get route for particular blog
 router.get('/:id', async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
@@ -19,14 +19,20 @@ router.get('/:id', async (req, res) => {
       return
     }
 
-    res.status(200).json(blogData);
+    const blog = blogData.get({ plain: true });
+
+    res.render('blog', { 
+        ...blog, 
+        logged_in: req.session.logged_in 
+      });
+    // res.status(200).json(blogData)
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// post route for adding new blogpot (taken back to updated dashboard)
-router.post('/', async (req, res) => {
+// post route for adding new comment (taken back to updated dashboard)
+router.post('/:id', async (req, res) => {
   try {
     const blogData = await Blog.create(req.body);
     res.status(200).json(blogData);
@@ -51,12 +57,20 @@ router.put('/:id', async (req, res) => {
 });
 
 // delete route for deleting blogpost (taken back to updated dashboard)
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
   const deleteBlog = await Blog.destroy({
     where: {
-      id: req.params.id
+      id: req.params.id,
+      user_id: req.session.user_id,
     }
   });
+
+  
+  if (!projectData) {
+    res.status(404).json({ message: 'No project found with this id!' });
+    return;
+  }
+
   res.json(deleteBlog)
 });
 
