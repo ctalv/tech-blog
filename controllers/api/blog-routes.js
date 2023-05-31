@@ -2,6 +2,18 @@ const router = require('express').Router();
 const { Blog, Comment, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+router.post('/', withAuth, async (req, res) => {
+    try {
+      const blogData = await Blog.create({
+        ...req.body,
+        user_id: req.session.user_id,
+      });
+      res.status(200).json(blogData);
+    } catch(err) {
+      res.status(400).json(err)
+    }
+  });
+
 // get route for particular blog
 router.get('/:id', async (req, res) => {
   try {
@@ -34,8 +46,8 @@ router.get('/:id', async (req, res) => {
 // post route for adding new comment (taken back to updated dashboard)
 router.post('/:id', async (req, res) => {
   try {
-    const blogData = await Blog.create(req.body);
-    res.status(200).json(blogData);
+    const commentData = await Comment.create(req.body);
+    res.status(200).json(commentData);
   } catch(err) {
     res.status(400).json(err)
   }

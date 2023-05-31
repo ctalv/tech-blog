@@ -12,13 +12,15 @@
 <body>
   <div class="flex-column justify-space-around">
     <header class="display-flex justify-space-between align-center p-2">
-      <h1>
-        <span role="img" aria-label="money"></span>
-        <a href="/">Welcome</a>
-      </h1>
-      <nav>
+
+      <nav class="nav">
         <!-- Conditionally render login or logout links -->
-        
+        <h2>
+          <a href="/">Homepage</a>
+        </h2>
+        <h2>
+          <a href="/api/dashboard">Dashboard</a>
+        </h2>
         {{#if logged_in}}
         {{!-- <a href="/profile">profile</a> | --}}
         <button class="no-button" id="logout">Logout</button>
@@ -32,7 +34,7 @@
       {{{ body }}}
     </main>
     <footer>
-      
+
     </footer>
   </div>
 
